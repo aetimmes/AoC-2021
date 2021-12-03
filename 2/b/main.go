@@ -16,7 +16,7 @@ func main() {
 	}
 	defer file.Close()
 
-	x, y := 0, 0
+	x, y, aim := 0, 0, 0
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -26,10 +26,11 @@ func main() {
 		switch dir := tokens[0]; dir {
 		case "forward":
 			x += magnitude
+			y += magnitude * aim
 		case "up":
-			y -= magnitude
+			aim -= magnitude
 		case "down":
-			y += magnitude
+			aim += magnitude
 		}
 
 	}
