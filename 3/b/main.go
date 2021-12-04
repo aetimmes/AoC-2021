@@ -17,28 +17,52 @@ func main() {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	scanner.Scan()
-	gamma := make([]int, len(scanner.Text()))
-	aggregate(scanner.Text(), gamma)
+	nums := []string{}
 	for scanner.Scan() {
-		aggregate(scanner.Text(), gamma)
-	}
-
-	g, e := 0, 0
-
-	for i, _ := range gamma {
-		if gamma[len(gamma)-i-1] > 0 {
-			g += int(math.Pow(2, float64(i)))
-		} else {
-			e += int(math.Pow(2, float64(i)))
+		fmt.Println("appending:" + scanner.Text())
+		if len(scanner.Text()) > 0 {
+			nums = append(nums, scanner.Text())
 		}
 	}
-	fmt.Println(g * e)
+
+	co2 := BAtoi(partition(nums, true, 0))
+	o2 := BAtoi(partition(nums, false, 0))
+
+	fmt.Println(co2 * o2)
 }
 
-func aggregate(s string, gamma []int) {
-	for i, c := range s {
-		c, _ := strconv.Atoi(string(c))
-		gamma[i] += c*2 - 1
+func partition(nums []string, common bool, index int) string {
+	fmt.Println("partition:" + strconv.FormatInt(int64(len(nums)), 10) + ", " +
+		strconv.FormatBool(common) + ", " + strconv.FormatInt(int64(index), 10))
+	if len(nums) == 1 {
+		return nums[0]
 	}
+
+	ones := []string{}
+	zeroes := []string{}
+
+	for i := range nums {
+		fmt.Println(strconv.FormatInt(int64(i), 10))
+		fmt.Println(nums[i])
+		if string(nums[i][index]) == "0" {
+			zeroes = append(zeroes, nums[i])
+		} else {
+			ones = append(ones, nums[i])
+		}
+	}
+	if len(ones) < len(zeroes) != common {
+		return partition(ones, common, index+1)
+	} else {
+		return partition(zeroes, common, index+1)
+	}
+}
+
+func BAtoi(num string) int {
+	result := 0
+	for i := range num {
+		if string(num[len(num)-i-1]) == "1" {
+			result += int(math.Pow(2, float64(i)))
+		}
+	}
+	return result
 }
