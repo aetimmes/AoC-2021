@@ -4,9 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"math"
 	"os"
-	"strconv"
 )
 
 func main() {
@@ -16,53 +14,39 @@ func main() {
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
-	nums := []string{}
-	for scanner.Scan() {
-		fmt.Println("appending:" + scanner.Text())
-		if len(scanner.Text()) > 0 {
-			nums = append(nums, scanner.Text())
-		}
-	}
-
-	co2 := BAtoi(partition(nums, true, 0))
-	o2 := BAtoi(partition(nums, false, 0))
-
-	fmt.Println(co2 * o2)
-}
-
-func partition(nums []string, common bool, index int) string {
-	fmt.Println("partition:" + strconv.FormatInt(int64(len(nums)), 10) + ", " +
-		strconv.FormatBool(common) + ", " + strconv.FormatInt(int64(index), 10))
-	if len(nums) == 1 {
-		return nums[0]
-	}
-
-	ones := []string{}
-	zeroes := []string{}
-
-	for i := range nums {
-		fmt.Println(strconv.FormatInt(int64(i), 10))
-		fmt.Println(nums[i])
-		if string(nums[i][index]) == "0" {
-			zeroes = append(zeroes, nums[i])
-		} else {
-			ones = append(ones, nums[i])
-		}
-	}
-	if len(ones) < len(zeroes) != common {
-		return partition(ones, common, index+1)
-	} else {
-		return partition(zeroes, common, index+1)
-	}
-}
-
-func BAtoi(num string) int {
 	result := 0
-	for i := range num {
-		if string(num[len(num)-i-1]) == "1" {
-			result += int(math.Pow(2, float64(i)))
-		}
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
 	}
-	return result
+	fmt.Println(result)
+}
+
+type BingoBoard struct {
+	nums map[int]bool
+	r1   map[int]bool
+	r2   map[int]bool
+	r3   map[int]bool
+	r4   map[int]bool
+	r5   map[int]bool
+	c1   map[int]bool
+	c2   map[int]bool
+	c3   map[int]bool
+	c4   map[int]bool
+	c5   map[int]bool
+}
+
+// This sucks
+
+func NewBoard(nums []int) BingoBoard {
+
+	board := {
+		nums,
+		nums[0:5],
+		nums[5:10],
+		nums[10:15],
+		nums[15:20],
+		nums[20:25],
+
+	}
 }
