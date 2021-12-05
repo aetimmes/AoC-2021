@@ -31,9 +31,6 @@ func main() {
 				boards = append(boards, NewBoard(current))
 				current = make([]int, 0, 25)
 			}
-			if len(current) > 25 {
-				panic("Too many numbers!")
-			}
 		}
 	}
 
@@ -56,9 +53,6 @@ type BingoBoard struct {
 
 func NewBoard(numbers []int) BingoBoard {
 	SIZE := 5
-	if len(numbers) != SIZE*SIZE {
-		panic("Wrong number of elements for NewBoard")
-	}
 	rows := make([]map[int]bool, 0, SIZE)
 	columns := make([]map[int]bool, 0, SIZE)
 	for i := 0; i < SIZE; i++ {
