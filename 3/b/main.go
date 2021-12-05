@@ -19,7 +19,6 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	nums := []string{}
 	for scanner.Scan() {
-		fmt.Println("appending:" + scanner.Text())
 		if len(scanner.Text()) > 0 {
 			nums = append(nums, scanner.Text())
 		}
@@ -32,8 +31,6 @@ func main() {
 }
 
 func partition(nums []string, common bool, index int) string {
-	fmt.Println("partition:" + strconv.FormatInt(int64(len(nums)), 10) + ", " +
-		strconv.FormatBool(common) + ", " + strconv.FormatInt(int64(index), 10))
 	if len(nums) == 1 {
 		return nums[0]
 	}
@@ -42,8 +39,6 @@ func partition(nums []string, common bool, index int) string {
 	zeroes := []string{}
 
 	for i := range nums {
-		fmt.Println(strconv.FormatInt(int64(i), 10))
-		fmt.Println(nums[i])
 		if string(nums[i][index]) == "0" {
 			zeroes = append(zeroes, nums[i])
 		} else {

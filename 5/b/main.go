@@ -44,8 +44,7 @@ func main() {
 		}
 		seen[p] += 1
 	}
-	for k, v := range seen {
-		fmt.Println(strconv.Itoa(k.x), strconv.Itoa(k.y), v)
+	for _, v := range seen {
 		if v > 1 {
 			result += 1
 		}
@@ -54,9 +53,7 @@ func main() {
 }
 
 func parseLine(s string) (point, point) {
-	fmt.Println("Parsing: ", s)
 	tokens := strings.Split(s, " -> ")
-	fmt.Println("Tokens: ", tokens)
 	return newPointFromString(tokens[0]), newPointFromString(tokens[1])
 }
 
@@ -68,7 +65,6 @@ func newPointFromString(s string) point {
 }
 
 func newPoint(x int, y int) point {
-	fmt.Println("Creating new point with x: ", x, ", y: ", y)
 	return point{x, y}
 }
 
