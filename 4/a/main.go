@@ -25,8 +25,9 @@ func main() {
 	boards := make([]BingoBoard, 0, 100)
 	current := make([]int, 0, 25)
 	for scanner.Scan() {
+		fmt.Println(scanner.Text())
 		if scanner.Text() != "" {
-			current = append(current, AStoNi(strings.Fields(scanner.Text()))...)
+			current = append(current, AStoi(strings.Fields(scanner.Text()))...)
 			if len(current) == 25 {
 				boards = append(boards, NewBoard(current))
 				current = make([]int, 0, 25)
@@ -68,9 +69,6 @@ func NewBoard(numbers []int) BingoBoard {
 	}
 	nums := make(map[int]bool)
 	for i := range numbers {
-		if numbers[i] == 0 {
-			panic("Zero is not a bingo number")
-		}
 		nums[numbers[i]] = true
 		rows[i/SIZE][numbers[i]] = true
 		columns[i%SIZE][numbers[i]] = true
@@ -116,16 +114,6 @@ func AStoi(num_strings []string) []int {
 	for i := range num_strings {
 		temp, _ := strconv.Atoi(num_strings[i])
 		result = append(result, temp)
-	}
-	return result
-}
-
-func AStoNi(num_strings []string) []int {
-	result := AStoi(num_strings)
-	for i := range result {
-		if result[i] == 0 {
-			panic("AStoNi returning a non-natural integer")
-		}
 	}
 	return result
 }
