@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -26,17 +27,26 @@ func main() {
 	seen := make(map[point]int)
 	for scanner.Scan() {
 		start, finish := parseLine(scanner.Text())
-		if start.x == finish.x {
-			i, j := enforceAscending(start.y, finish.y)
-			for p := newPoint(start.x, i); p.y <= j; p.y++ {
-				seen[p] += 1
-			}
-		} else if start.y == finish.y {
-			i, j := enforceAscending(start.x, finish.x)
-			for p := newPoint(i, start.y); p.x <= j; p.x++ {
-				seen[p] += 1
-			}
+		x_dir := 0
+		if start.x < finish.x {
+			x_dir = 1
+		} else if start.x > finish.x {
+			x_dir = -1
 		}
+		y_dir := 0
+		if start.y < finish.y {
+			y_dir = 1
+		} else if start.y > finish.y {
+			y_dir = -1
+		}
+		if math.Abs(float64(x_dir)+float64(y_dir)) != 1 {
+			continue
+		}
+		p := newPoint(start.x, start.y)
+		for ; p.x != finish.x || p.y != finish.y; p.x, p.y = p.x+x_dir, p.y+y_dir {
+			seen[p] += 1
+		}
+		seen[p] += 1
 	}
 	for _, v := range seen {
 		if v > 1 {
@@ -60,11 +70,4 @@ func newPointFromString(s string) point {
 
 func newPoint(x int, y int) point {
 	return point{x, y}
-}
-
-func enforceAscending(x int, y int) (int, int) {
-	if x <= y {
-		return x, y
-	}
-	return y, x
 }

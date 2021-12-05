@@ -67,10 +67,3 @@ func newPointFromString(s string) point {
 func newPoint(x int, y int) point {
 	return point{x, y}
 }
-
-func enforceAscending(x int, y int) (int, int) {
-	if x <= y {
-		return x, y
-	}
-	return y, x
-}
