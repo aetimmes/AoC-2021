@@ -25,7 +25,6 @@ func main() {
 	boards := make([]BingoBoard, 0, 100)
 	current := make([]int, 0, 25)
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
 		if scanner.Text() != "" {
 			current = append(current, AStoi(strings.Fields(scanner.Text()))...)
 			if len(current) == 25 {
@@ -38,13 +37,20 @@ func main() {
 		}
 	}
 
+	live_boards := map[int]bool{}
+	for i := range boards {
+		live_boards[i] = true
+	}
+
 	for i := range called_nums {
-		fmt.Println("calling number " + strconv.FormatInt(int64(called_nums[i]), 10))
-		for j := range boards {
+		for j := range live_boards {
 			boards[j] = callNumber(boards[j], called_nums[i])
 			if checkWin(boards[j]) {
-				fmt.Println(getScore(boards[j], called_nums[i]))
-				return
+				if len(live_boards) == 1 {
+					fmt.Println(getScore(boards[j], called_nums[i]))
+					return
+				}
+				delete(live_boards, j)
 			}
 		}
 	}
