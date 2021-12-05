@@ -38,7 +38,6 @@ func main() {
 	}
 
 	for i := range called_nums {
-		fmt.Println("calling number " + strconv.FormatInt(int64(called_nums[i]), 10))
 		for j := range boards {
 			boards[j] = callNumber(boards[j], called_nums[i])
 			if checkWin(boards[j]) {
@@ -112,9 +111,7 @@ func AStoi(num_strings []string) []int {
 	result := make([]int, 0, len(num_strings))
 	for i := range num_strings {
 		temp, _ := strconv.Atoi(num_strings[i])
-		if temp > 0 {
-			result = append(result, temp)
-		}
+		result = append(result, temp)
 	}
 	return result
 }
