@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -7,12 +7,11 @@ import (
 	"math"
 	"os"
 	"sort"
-	"strconv"
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F7b(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,15 +28,6 @@ func main() {
 		calcCrabFuel(positions, math.Ceil(midpoint)),
 	)
 	fmt.Println(int(result))
-}
-
-func AStof(num_strings []string) []float64 {
-	result := make([]float64, 0, len(num_strings))
-	for i := range num_strings {
-		temp, _ := strconv.ParseFloat(num_strings[i], 64)
-		result = append(result, temp)
-	}
-	return result
 }
 
 func averageFloat64(f []float64) float64 {

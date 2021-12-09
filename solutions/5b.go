@@ -1,21 +1,15 @@
-package main
+package solutions
 
 import (
 	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 )
 
-type point struct {
-	x int
-	y int
-}
-
-func main() {
-	file, err := os.Open("../input.txt")
+func F5b(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +19,7 @@ func main() {
 	result := 0
 	seen := make(map[point]int)
 	for scanner.Scan() {
-		start, finish := parseLine(scanner.Text())
+		start, finish := parseLine5(scanner.Text())
 		x_dir := 0
 		if start.x < finish.x {
 			x_dir = 1
@@ -52,18 +46,7 @@ func main() {
 	fmt.Println(result)
 }
 
-func parseLine(s string) (point, point) {
+func parseLiner5(s string) (point, point) {
 	tokens := strings.Split(s, " -> ")
 	return newPointFromString(tokens[0]), newPointFromString(tokens[1])
-}
-
-func newPointFromString(s string) point {
-	tokens := strings.Split(s, ",")
-	x, _ := strconv.Atoi(tokens[0])
-	y, _ := strconv.Atoi(tokens[1])
-	return newPoint(x, y)
-}
-
-func newPoint(x int, y int) point {
-	return point{x, y}
 }

@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -8,8 +8,8 @@ import (
 	"os"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F3b(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}

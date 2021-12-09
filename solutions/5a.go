@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -15,8 +15,8 @@ type point struct {
 	y int
 }
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F5a(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,7 +26,7 @@ func main() {
 	result := 0
 	seen := make(map[point]int)
 	for scanner.Scan() {
-		start, finish := parseLine(scanner.Text())
+		start, finish := parseLine5(scanner.Text())
 		x_dir := 0
 		if start.x < finish.x {
 			x_dir = 1
@@ -56,7 +56,7 @@ func main() {
 	fmt.Println(result)
 }
 
-func parseLine(s string) (point, point) {
+func parseLine5(s string) (point, point) {
 	tokens := strings.Split(s, " -> ")
 	return newPointFromString(tokens[0]), newPointFromString(tokens[1])
 }

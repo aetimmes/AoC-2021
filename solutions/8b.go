@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F8b(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,7 +20,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
-		l, r := parseLine(line)
+		l, r := parseLine8b(line)
 		mappings := determineMappings(l)
 		result += getValue(r, mappings)
 	}
@@ -45,7 +45,7 @@ func getValue(r []map[string]bool, mappings []map[string]bool) int {
 	return result
 }
 
-func parseLine(s string) ([]map[string]bool, []map[string]bool) {
+func parseLine8b(s string) ([]map[string]bool, []map[string]bool) {
 	temp := strings.Split(s, "|")
 	l := make([]map[string]bool, 0, 10)
 	tl := strings.Fields(temp[0])

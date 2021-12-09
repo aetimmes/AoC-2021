@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F4b(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,12 +34,20 @@ func main() {
 		}
 	}
 
+	live_boards := map[int]bool{}
+	for i := range boards {
+		live_boards[i] = true
+	}
+
 	for i := range called_nums {
-		for j := range boards {
+		for j := range live_boards {
 			boards[j] = callNumber(boards[j], called_nums[i])
 			if checkWin(boards[j]) {
-				fmt.Println(getScore(boards[j], called_nums[i]))
-				return
+				if len(live_boards) == 1 {
+					fmt.Println(getScore(boards[j], called_nums[i]))
+					return
+				}
+				delete(live_boards, j)
 			}
 		}
 	}

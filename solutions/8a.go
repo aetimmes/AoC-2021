@@ -1,4 +1,4 @@
-package main
+package solutions
 
 import (
 	"bufio"
@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F8a(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -18,7 +18,7 @@ func main() {
 	result := 0
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		_, r := parseLine(scanner.Text())
+		_, r := parseLine8a(scanner.Text())
 		for i := range r {
 			switch len(r[i]) {
 			case 2, 3, 4, 7:
@@ -30,7 +30,7 @@ func main() {
 	fmt.Println(result)
 }
 
-func parseLine(s string) ([]string, []string) {
+func parseLine8a(s string) ([]string, []string) {
 	temp := strings.Split(s, "|")
 	l := strings.Fields(temp[0])
 	r := strings.Fields(temp[1])

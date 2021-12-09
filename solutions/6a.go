@@ -1,16 +1,15 @@
-package main
+package solutions
 
 import (
 	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 )
 
-func main() {
-	file, err := os.Open("../input.txt")
+func F6a(filename string) {
+	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,13 +30,4 @@ func main() {
 		}
 	}
 	fmt.Println(len(fish))
-}
-
-func AStoi(num_strings []string) []int {
-	result := make([]int, 0, len(num_strings))
-	for i := range num_strings {
-		temp, _ := strconv.Atoi(num_strings[i])
-		result = append(result, temp)
-	}
-	return result
 }
