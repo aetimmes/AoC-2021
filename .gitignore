@@ -21,3 +21,10 @@ AoC-2021
 # VSCode
 
 .vscode/
+
+# Editurds
+*.swp
+*~
+
+# Delve bits
+__debug_bin

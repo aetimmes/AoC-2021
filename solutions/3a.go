@@ -26,7 +26,7 @@ func F3a(filename string) {
 
 	g, e := 0, 0
 
-	for i, _ := range gamma {
+	for i := range gamma {
 		if gamma[len(gamma)-i-1] > 0 {
 			g += int(math.Pow(2, float64(i)))
 		} else {

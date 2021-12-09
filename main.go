@@ -26,10 +26,8 @@ var funcs = map[string]interface{}{
 	"7b": solutions.F7b,
 	"8a": solutions.F8a,
 	"8b": solutions.F8b,
-	/*
-		"9a": solutions.F9a,
-		"9b": solutions.F9b,
-	*/
+	"9a": solutions.F9a,
+	"9b": solutions.F9b,
 }
 
 func main() {
@@ -37,11 +35,17 @@ func main() {
 	flag.BoolVar(test, "t", false, "")
 	flag.Parse()
 	if flag.NArg() != 1 {
-		err := fmt.Errorf("Expected 1 positional argument, got %d", flag.NArg())
+		err := fmt.Errorf("expected 1 positional argument, got %d", flag.NArg())
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	function := reflect.ValueOf(funcs[flag.Arg(0)])
+	v, ok := funcs[flag.Arg(0)]
+	if !ok {
+		err := fmt.Errorf("no solution function for problem %s", flag.Arg(0))
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	function := reflect.ValueOf(v)
 
 	filename := string(flag.Arg(0)[0]) + ".txt"
 	if *test {
