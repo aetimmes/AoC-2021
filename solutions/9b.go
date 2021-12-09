@@ -16,11 +16,6 @@ type Basin struct {
 	members set.Set[point]
 }
 
-type BasinCheck struct {
-	p point
-	d string
-}
-
 func F9b(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -57,16 +52,16 @@ func F9b(filename string) {
 	scores := make([]int, 0, len(basins))
 
 	for i := range basins {
-		toCheck := append(make([]point, 0, 100), basins[i].origin)
-		checked := set.NewSet[BasinCheck]()
-		for len(toCheck) > 0 {
-			current, toCheck := toCheck[0], toCheck[1:]
+		toCheck := make([]point, 0, 100)
+		toCheck = append(toCheck, basins[i].origin)
+		for {
+			current := toCheck[0]
+			toCheck = toCheck[1:]
 			for d, dp := range dirs {
 				candidate := point{current.x + dp.x, current.y + dp.y}
-				if set.Contains(&checked, BasinCheck{candidate, d}) {
+				if !checkBounds(candidate, r, c) {
 					continue
 				}
-				fmt.Println("Checking:", candidate.x, candidate.y, d)
 				if !set.Contains(&basins[i].members, candidate) &&
 					checkBounds(candidate, r, c) &&
 					checkHeight(candidate, heights) &&
@@ -74,7 +69,9 @@ func F9b(filename string) {
 					set.Add(&basins[i].members, candidate)
 					toCheck = append(toCheck, candidate)
 				}
-				set.Add(&checked, BasinCheck{candidate, d})
+			}
+			if len(toCheck) == 0 {
+				break
 			}
 		}
 		scores = append(scores, set.Size(&basins[i].members))
@@ -86,5 +83,5 @@ func F9b(filename string) {
 }
 
 func checkHeight(p point, heights [][]int) bool {
-	return heights[p.x][p.y] != 9
+	return heights[p.y][p.x] != 9
 }
