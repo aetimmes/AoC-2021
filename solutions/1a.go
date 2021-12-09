@@ -17,7 +17,7 @@ func F1a(filename string) {
 
 	scanner := bufio.NewScanner(file)
 	scanner.Scan()
-	previous, err := strconv.Atoi(scanner.Text())
+	previous, _ := strconv.Atoi(scanner.Text())
 	result := 0
 	for scanner.Scan() {
 		temp := scanner.Text()

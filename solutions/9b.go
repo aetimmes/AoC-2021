@@ -52,8 +52,7 @@ func F9b(filename string) {
 	scores := make([]int, 0, len(basins))
 
 	for i := range basins {
-		toCheck := make([]point, 0, 100)
-		toCheck = append(toCheck, basins[i].origin)
+		toCheck := append(make([]point, 0, 100), basins[i].origin)
 		for len(toCheck) > 0 {
 			current := toCheck[0]
 			toCheck = toCheck[1:]
@@ -62,10 +61,7 @@ func F9b(filename string) {
 				if !checkBounds(candidate, r, c) {
 					continue
 				}
-				if !set.Contains(&basins[i].members, candidate) &&
-					checkBounds(candidate, r, c) &&
-					checkHeight(candidate, heights) &&
-					checkPoint(current, d, heights, r, c) {
+				if canAdd(candidate, current, basins[i], heights, d, r, c) {
 					set.Add(&basins[i].members, candidate)
 					toCheck = append(toCheck, candidate)
 				}
@@ -77,6 +73,13 @@ func F9b(filename string) {
 	sort.Sort(sort.Reverse(sort.IntSlice(scores)))
 
 	fmt.Println(scores[0] * scores[1] * scores[2])
+}
+
+func canAdd(candidate, current point, b Basin, heights [][]int, d string, r, c int) bool {
+	return !set.Contains(&b.members, candidate) &&
+		checkBounds(candidate, r, c) &&
+		checkHeight(candidate, heights) &&
+		checkPoint(current, d, heights, r, c)
 }
 
 func checkHeight(p point, heights [][]int) bool {
