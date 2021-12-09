@@ -54,7 +54,7 @@ func F9b(filename string) {
 	for i := range basins {
 		toCheck := make([]point, 0, 100)
 		toCheck = append(toCheck, basins[i].origin)
-		for {
+		for len(toCheck) > 0 {
 			current := toCheck[0]
 			toCheck = toCheck[1:]
 			for d, dp := range dirs {
@@ -69,9 +69,6 @@ func F9b(filename string) {
 					set.Add(&basins[i].members, candidate)
 					toCheck = append(toCheck, candidate)
 				}
-			}
-			if len(toCheck) == 0 {
-				break
 			}
 		}
 		scores = append(scores, set.Size(&basins[i].members))
