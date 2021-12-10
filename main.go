@@ -28,6 +28,8 @@ var funcs = map[string]interface{}{
 	"8b": solutions.F8b,
 	"9a": solutions.F9a,
 	"9b": solutions.F9b,
+	"10a": solutions.F10a,
+	"10b": solutions.F10b,
 }
 
 func main() {
