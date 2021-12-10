@@ -2,9 +2,6 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
@@ -22,14 +19,8 @@ var bracePairs = map[byte]byte{
 	'>': '<',
 }
 
-func F10a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F10a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	result := 0
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
@@ -37,7 +28,7 @@ func F10a(filename string) {
 			result += scoreLine(line)
 		}
 	}
-	fmt.Println(result)
+	return result
 }
 
 func scoreLine(s string) int {

@@ -2,22 +2,13 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"reflect"
 	"strings"
 )
 
-func F8b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
+func F8b(input string) int {
 	result := 0
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	for scanner.Scan() {
 		line := scanner.Text()
 		l, r := parseLine8b(line)
@@ -25,7 +16,7 @@ func F8b(filename string) {
 		result += getValue(r, mappings)
 	}
 
-	fmt.Println(result)
+	return result
 }
 
 func getValue(r []map[string]bool, mappings []map[string]bool) int {

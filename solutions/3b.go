@@ -2,20 +2,12 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"math"
-	"os"
+	"strings"
 )
 
-func F3b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F3b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	nums := []string{}
 	for scanner.Scan() {
 		if len(scanner.Text()) > 0 {
@@ -26,7 +18,7 @@ func F3b(filename string) {
 	co2 := BAtoi(partition(nums, true, 0))
 	o2 := BAtoi(partition(nums, false, 0))
 
-	fmt.Println(co2 * o2)
+	return co2 * o2
 }
 
 func partition(nums []string, common bool, index int) string {

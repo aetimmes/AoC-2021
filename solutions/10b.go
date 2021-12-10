@@ -2,9 +2,6 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"sort"
 	"strings"
 )
@@ -16,14 +13,8 @@ var acScores = map[byte]int{
 	'<': 4,
 }
 
-func F10b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F10b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scores := make([]int, 0, 106)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
@@ -35,7 +26,7 @@ func F10b(filename string) {
 		}
 	}
 	sort.Ints(scores)
-	fmt.Println(scores[len(scores)/2])
+	return scores[len(scores)/2]
 }
 
 func scoreACLine(s string) int {

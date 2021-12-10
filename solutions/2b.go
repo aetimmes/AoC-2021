@@ -2,23 +2,14 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func F2b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
+func F2b(input string) int {
 	x, y, aim := 0, 0, 0
 
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	for scanner.Scan() {
 		current := scanner.Text()
 		tokens := strings.Fields(current)
@@ -34,5 +25,5 @@ func F2b(filename string) {
 		}
 
 	}
-	fmt.Println(x * y)
+	return x * y
 }

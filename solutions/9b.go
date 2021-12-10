@@ -2,9 +2,6 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"sort"
 	"strings"
 
@@ -16,14 +13,8 @@ type Basin struct {
 	members set.Set[point]
 }
 
-func F9b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F9b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	heights := make([][]int, 0, 100)
 
 	for scanner.Scan() {
@@ -72,7 +63,7 @@ func F9b(filename string) {
 
 	sort.Sort(sort.Reverse(sort.IntSlice(scores)))
 
-	fmt.Println(scores[0] * scores[1] * scores[2])
+	return scores[0] * scores[1] * scores[2]
 }
 
 func canAdd(candidate, current point, b Basin, heights [][]int, d string, r, c int) bool {

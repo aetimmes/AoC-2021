@@ -2,22 +2,12 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func F4b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
+func F4b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	num_strings := strings.Split(scanner.Text(), ",")
 	called_nums := AStoi(num_strings)
@@ -44,13 +34,13 @@ func F4b(filename string) {
 			boards[j] = callNumber(boards[j], called_nums[i])
 			if checkWin(boards[j]) {
 				if len(live_boards) == 1 {
-					fmt.Println(getScore(boards[j], called_nums[i]))
-					return
+					return getScore(boards[j], called_nums[i])
 				}
 				delete(live_boards, j)
 			}
 		}
 	}
+	panic("No solution found")
 }
 
 type BingoBoard struct {

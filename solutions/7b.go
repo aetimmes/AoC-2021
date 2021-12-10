@@ -2,22 +2,13 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"math"
-	"os"
 	"sort"
 	"strings"
 )
 
-func F7b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F7b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	positions := AStof(strings.Split(scanner.Text(), ","))
 	sort.Float64s(positions)
@@ -27,7 +18,7 @@ func F7b(filename string) {
 		calcCrabFuel(positions, math.Floor(midpoint)),
 		calcCrabFuel(positions, math.Ceil(midpoint)),
 	)
-	fmt.Println(int(result))
+	return int(result)
 }
 
 func averageFloat64(f []float64) float64 {

@@ -3,20 +3,12 @@ package solutions
 import (
 	"bufio"
 	"container/ring"
-	"fmt"
-	"log"
-	"os"
 	"strconv"
+	"strings"
 )
 
-func F1b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F1b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	r := ring.New(3)
 
 	for i := 0; i < 3; i++ {
@@ -34,5 +26,5 @@ func F1b(filename string) {
 		r.Value = current
 		r = r.Next()
 	}
-	fmt.Println(result)
+	return result
 }

@@ -3,10 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
+	"strconv"
+	"strings"
 
 	"github.com/aetimmes/AoC-2021/solutions"
+	"github.com/aetimmes/go-aoc-client/aocclient"
 )
 
 var funcs = map[string]interface{}{
@@ -32,9 +36,16 @@ var funcs = map[string]interface{}{
 	"10b": solutions.F10b,
 }
 
+var levelMap = map[byte]int{
+	'a': 1,
+	'b': 2,
+}
+
 func main() {
 	test := flag.Bool("test", false, "use test input rather than primary input")
 	flag.BoolVar(test, "t", false, "")
+	noSubmit := flag.Bool("dry-run", false, "doesn't submit answer to AoC")
+	flag.BoolVar(test, "d", false, "")
 	flag.Parse()
 	if flag.NArg() != 1 {
 		err := fmt.Errorf("expected 1 positional argument, got %d", flag.NArg())
@@ -43,18 +54,52 @@ func main() {
 	}
 	v, ok := funcs[flag.Arg(0)]
 	if !ok {
-		err := fmt.Errorf("no solution function for problem %s", flag.Arg(0))
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatalf("no solution function for problem %s", flag.Arg(0))
 	}
+	year := 2021
+	day, err := strconv.Atoi(flag.Arg(0)[:len(flag.Arg(0))-1])
+	if err != nil {
+		log.Fatalf("Failed to parse day %s: %s", flag.Arg(0), err)
+	}
+	sf, err := os.ReadFile("sessionID.txt")
+	if err != nil {
+		log.Fatalf("Failed to get sessionID: %s", err)
+	}
+	sessionID := strings.TrimSpace(string(sf))
+	level := levelMap[flag.Arg(0)[len(flag.Arg(0))-1]]
 	function := reflect.ValueOf(v)
-
-	filename := string(flag.Arg(0)[:len(flag.Arg(0))-1]) + ".txt"
+	var input string
 	if *test {
-		filename = "test-" + filename
+		inputFile, err := os.ReadFile(fmt.Sprintf("inputs/test-%d.txt", day))
+		if err != nil {
+			log.Fatalf("Failed to read test input file: %s", err)
+		}
+		input = string(inputFile)
+	} else {
+		input, err = aocclient.GetInput(year, day, sessionID)
+		if err != nil {
+			log.Fatalf("Failed to get problem input: %s", err)
+		}
 	}
-	path := "inputs/" + filename
+
 	params := make([]reflect.Value, 0, 1)
-	params = append(params, reflect.ValueOf(path))
-	function.Call(params)
+	params = append(params, reflect.ValueOf(input))
+	results := function.Call(params)
+	if len(results) > 1 {
+		log.Fatalf("wrong number of values returned by function")
+	}
+
+	answer := int(results[0].Int())
+
+	if *test {
+		fmt.Println(answer)
+	} else if *noSubmit {
+		fmt.Println("Answer: ", answer, "Result not submitted")
+	} else {
+		response_type, err := aocclient.SubmitAnswer(year, day, level, answer, sessionID)
+		if err != nil {
+			log.Printf("Error submitting answer: %s\n", err)
+		}
+		fmt.Println("Answer: ", answer, "Result: ", aocclient.ResponseTypeMap[response_type])
+	}
 }

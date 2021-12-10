@@ -2,20 +2,12 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strconv"
+	"strings"
 )
 
-func F1a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F1a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	previous, _ := strconv.Atoi(scanner.Text())
 	result := 0
@@ -27,5 +19,5 @@ func F1a(filename string) {
 		}
 		previous = current
 	}
-	fmt.Println(result)
+	return result
 }

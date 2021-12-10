@@ -2,21 +2,12 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
-func F8a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
+func F8a(input string) int {
 	result := 0
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	for scanner.Scan() {
 		_, r := parseLine8a(scanner.Text())
 		for i := range r {
@@ -27,7 +18,7 @@ func F8a(filename string) {
 			}
 		}
 	}
-	fmt.Println(result)
+	return result
 }
 
 func parseLine8a(s string) ([]string, []string) {

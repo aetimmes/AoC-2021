@@ -2,9 +2,6 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
@@ -15,14 +12,8 @@ var dirs = map[string]point{
 	"W": {-1, 0},
 }
 
-func F9a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F9a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	result := 0
 	heights := make([][]int, 0, 100)
 
@@ -41,13 +32,12 @@ func F9a(filename string) {
 	for x := 0; x < c; x++ {
 		for y := 0; y < r; y++ {
 			if isLocalMin(point{x, y}, heights, r, c) {
-				fmt.Println("found min:", x, y)
 				result += 1 + heights[y][x]
 			}
 		}
 	}
 
-	fmt.Println(result)
+	return result
 }
 
 func checkBounds(p point, r, c int) bool {

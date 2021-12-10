@@ -2,21 +2,13 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"math"
-	"os"
 	"strconv"
+	"strings"
 )
 
-func F3a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F3a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	gamma := make([]int, len(scanner.Text()))
 	aggregate(scanner.Text(), gamma)
@@ -33,7 +25,7 @@ func F3a(filename string) {
 			e += int(math.Pow(2, float64(i)))
 		}
 	}
-	fmt.Println(g * e)
+	return (g * e)
 }
 
 func aggregate(s string, gamma []int) {

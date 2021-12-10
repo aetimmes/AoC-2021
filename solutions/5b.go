@@ -2,20 +2,11 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
-func F5b(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F5b(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	result := 0
 	seen := make(map[point]int)
 	for scanner.Scan() {
@@ -43,7 +34,7 @@ func F5b(filename string) {
 			result += 1
 		}
 	}
-	fmt.Println(result)
+	return result
 }
 
 func parseLiner5(s string) (point, point) {

@@ -28,3 +28,9 @@ AoC-2021
 
 # Delve bits
 __debug_bin
+
+# Cookie files
+*.txt
+
+# Cache
+.aoc/

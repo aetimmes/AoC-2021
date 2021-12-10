@@ -2,20 +2,11 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
-func F6a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F6a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	fish := AStoi(strings.Split(scanner.Text(), ","))
 
@@ -29,5 +20,5 @@ func F6a(filename string) {
 			}
 		}
 	}
-	fmt.Println(len(fish))
+	return len(fish)
 }

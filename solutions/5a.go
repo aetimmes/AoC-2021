@@ -2,10 +2,7 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
 	"math"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -15,14 +12,8 @@ type point struct {
 	y int
 }
 
-func F5a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
+func F5a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	result := 0
 	seen := make(map[point]int)
 	for scanner.Scan() {
@@ -53,7 +44,7 @@ func F5a(filename string) {
 			result += 1
 		}
 	}
-	fmt.Println(result)
+	return result
 }
 
 func parseLine5(s string) (point, point) {

@@ -2,23 +2,13 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func F2a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
+func F2a(input string) int {
 	x, y := 0, 0
-
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	for scanner.Scan() {
 		current := scanner.Text()
 		tokens := strings.Fields(current)
@@ -33,5 +23,5 @@ func F2a(filename string) {
 		}
 
 	}
-	fmt.Println(x * y)
+	return x * y
 }

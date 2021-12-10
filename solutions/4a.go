@@ -2,25 +2,14 @@ package solutions
 
 import (
 	"bufio"
-	"fmt"
-	"log"
-	"os"
 	"strings"
 )
 
-func F4a(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
+func F4a(input string) int {
+	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Scan()
 	num_strings := strings.Split(scanner.Text(), ",")
 	called_nums := AStoi(num_strings)
-
 	boards := make([]BingoBoard, 0, 100)
 	current := make([]int, 0, 25)
 	for scanner.Scan() {
@@ -37,9 +26,9 @@ func F4a(filename string) {
 		for j := range boards {
 			boards[j] = callNumber(boards[j], called_nums[i])
 			if checkWin(boards[j]) {
-				fmt.Println(getScore(boards[j], called_nums[i]))
-				return
+				return getScore(boards[j], called_nums[i])
 			}
 		}
 	}
+	panic("No solution found")
 }
