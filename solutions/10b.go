@@ -5,24 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strings"
 )
 
-var scores = map[byte]int{
-	')': 3,
-	']': 57,
-	'}': 1197,
-	'>': 25137,
+var acScores = map[byte]int{
+	'(': 1,
+	'[': 2,
+	'{': 3,
+	'<': 4,
 }
 
-var bracePairs = map[byte]byte{
-	')': '(',
-	']': '[',
-	'}': '{',
-	'>': '<',
-}
-
-func F10a(filename string) {
+func F10b(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
@@ -30,17 +24,21 @@ func F10a(filename string) {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	result := 0
+	scores := make([]int, 0, 106)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		if line != "" {
-			result += scoreLine(line)
+			score := scoreACLine(line)
+			if score > 0 {
+				scores = append(scores, score)
+			}
 		}
 	}
-	fmt.Println(result)
+	sort.Ints(scores)
+	fmt.Println(scores[len(scores)/2])
 }
 
-func scoreLine(s string) int {
+func scoreACLine(s string) int {
 	q := make([]byte, 0, 100)
 	for i := range s {
 		_, ok := scores[s[i]]
@@ -48,11 +46,16 @@ func scoreLine(s string) int {
 			if q[len(q)-1] == bracePairs[s[i]] {
 				q = q[:len(q)-1]
 			} else {
-				return scores[s[i]]
+				return 0
 			}
 		} else {
 			q = append(q, s[i])
 		}
 	}
-	return 0
+	result := 0
+	for i := range q {
+		result *= 5
+		result += acScores[q[len(q)-i-1]]
+	}
+	return result
 }
