@@ -10,24 +10,24 @@ import (
 )
 
 var funcs = map[string]interface{}{
-	"1a": solutions.F1a,
-	"1b": solutions.F1b,
-	"2a": solutions.F2a,
-	"2b": solutions.F2b,
-	"3a": solutions.F3a,
-	"3b": solutions.F3b,
-	"4a": solutions.F4a,
-	"4b": solutions.F4b,
-	"5a": solutions.F5a,
-	"5b": solutions.F5b,
-	"6a": solutions.F6a,
-	"6b": solutions.F6b,
-	"7a": solutions.F7a,
-	"7b": solutions.F7b,
-	"8a": solutions.F8a,
-	"8b": solutions.F8b,
-	"9a": solutions.F9a,
-	"9b": solutions.F9b,
+	"1a":  solutions.F1a,
+	"1b":  solutions.F1b,
+	"2a":  solutions.F2a,
+	"2b":  solutions.F2b,
+	"3a":  solutions.F3a,
+	"3b":  solutions.F3b,
+	"4a":  solutions.F4a,
+	"4b":  solutions.F4b,
+	"5a":  solutions.F5a,
+	"5b":  solutions.F5b,
+	"6a":  solutions.F6a,
+	"6b":  solutions.F6b,
+	"7a":  solutions.F7a,
+	"7b":  solutions.F7b,
+	"8a":  solutions.F8a,
+	"8b":  solutions.F8b,
+	"9a":  solutions.F9a,
+	"9b":  solutions.F9b,
 	"10a": solutions.F10a,
 	"10b": solutions.F10b,
 }
@@ -49,7 +49,7 @@ func main() {
 	}
 	function := reflect.ValueOf(v)
 
-	filename := string(flag.Arg(0)[0]) + ".txt"
+	filename := string(flag.Arg(0)[:len(flag.Arg(0))-1]) + ".txt"
 	if *test {
 		filename = "test-" + filename
 	}
