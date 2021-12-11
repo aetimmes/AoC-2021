@@ -30,7 +30,7 @@ AoC-2021
 __debug_bin
 
 # Cookie files
-*.txt
+*session*
 
 # Cache
 .aoc/
