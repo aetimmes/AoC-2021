@@ -34,6 +34,8 @@ var funcs = map[string]interface{}{
 	"9b":  solutions.F9b,
 	"10a": solutions.F10a,
 	"10b": solutions.F10b,
+	"11a": solutions.F11a,
+	"11b": solutions.F11b,
 }
 
 var levelMap = map[byte]int{
@@ -61,7 +63,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to parse day %s: %s", flag.Arg(0), err)
 	}
-	sf, err := os.ReadFile("sessionID.txt")
+	sf, err := os.ReadFile("session.txt")
 	if err != nil {
 		log.Fatalf("Failed to get sessionID: %s", err)
 	}

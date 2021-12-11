@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var dirs = map[string]point{
+var cardinalDirs = map[string]point{
 	"N": {0, 1},
 	"S": {0, -1},
 	"E": {1, 0},
@@ -46,7 +46,7 @@ func checkBounds(p point, r, c int) bool {
 }
 
 func isLocalMin(p point, heights [][]int, r, c int) bool {
-	for d := range dirs {
+	for d := range cardinalDirs {
 		if !checkPoint(p, d, heights, r, c) {
 			return false
 		}
@@ -55,6 +55,6 @@ func isLocalMin(p point, heights [][]int, r, c int) bool {
 }
 
 func checkPoint(p point, d string, heights [][]int, r, c int) bool {
-	p2 := point{p.x + dirs[d].x, p.y + dirs[d].y}
+	p2 := point{p.x + cardinalDirs[d].x, p.y + cardinalDirs[d].y}
 	return !checkBounds(p2, r, c) || heights[p.y][p.x] < heights[p2.y][p2.x]
 }

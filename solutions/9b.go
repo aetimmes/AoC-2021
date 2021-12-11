@@ -47,7 +47,7 @@ func F9b(input string) int {
 		for len(toCheck) > 0 {
 			current := toCheck[0]
 			toCheck = toCheck[1:]
-			for d, dp := range dirs {
+			for d, dp := range cardinalDirs {
 				candidate := point{current.x + dp.x, current.y + dp.y}
 				if !checkBounds(candidate, r, c) {
 					continue
