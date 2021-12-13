@@ -16,7 +16,6 @@ func F13b(input string) int {
 		points[point{x, y}] = 1
 
 	}
-	printPoints(points)
 	folds := strings.Split(halves[1], "\n")
 	for i := range folds {
 		points = fold(folds[i], points)
