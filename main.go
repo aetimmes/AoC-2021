@@ -38,6 +38,8 @@ var funcs = map[string]interface{}{
 	"11b": solutions.F11b,
 	"12a": solutions.F12a,
 	"12b": solutions.F12b,
+	"13a": solutions.F13a,
+	"13b": solutions.F13b,
 }
 
 var levelMap = map[byte]int{
@@ -49,7 +51,7 @@ func main() {
 	test := flag.Bool("test", false, "use test input rather than primary input")
 	flag.BoolVar(test, "t", false, "")
 	noSubmit := flag.Bool("dry-run", false, "doesn't submit answer to AoC")
-	flag.BoolVar(test, "d", false, "")
+	flag.BoolVar(noSubmit, "d", false, "")
 	flag.Parse()
 	if flag.NArg() != 1 {
 		err := fmt.Errorf("expected 1 positional argument, got %d", flag.NArg())
@@ -96,9 +98,7 @@ func main() {
 
 	answer := int(results[0].Int())
 
-	if *test {
-		fmt.Println(answer)
-	} else if *noSubmit {
+	if *test || *noSubmit {
 		fmt.Println("Answer: ", answer, "Result not submitted")
 	} else {
 		response_type, err := aocclient.SubmitAnswer(year, day, level, answer, sessionID)
