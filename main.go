@@ -36,6 +36,8 @@ var funcs = map[string]interface{}{
 	"10b": solutions.F10b,
 	"11a": solutions.F11a,
 	"11b": solutions.F11b,
+	"12a": solutions.F12a,
+	"12b": solutions.F12b,
 }
 
 var levelMap = map[byte]int{
@@ -63,14 +65,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to parse day %s: %s", flag.Arg(0), err)
 	}
-	sf, err := os.ReadFile("session.txt")
-	if err != nil {
-		log.Fatalf("Failed to get sessionID: %s", err)
-	}
-	sessionID := strings.TrimSpace(string(sf))
 	level := levelMap[flag.Arg(0)[len(flag.Arg(0))-1]]
 	function := reflect.ValueOf(v)
 	var input string
+	var sessionID string
 	if *test {
 		inputFile, err := os.ReadFile(fmt.Sprintf("inputs/test-%d.txt", day))
 		if err != nil {
@@ -78,6 +76,11 @@ func main() {
 		}
 		input = string(inputFile)
 	} else {
+		sf, err := os.ReadFile("session.txt")
+		if err != nil {
+			log.Fatalf("Failed to get sessionID: %s", err)
+		}
+		sessionID = strings.TrimSpace(string(sf))
 		input, err = aocclient.GetInput(year, day, sessionID)
 		if err != nil {
 			log.Fatalf("Failed to get problem input: %s", err)
