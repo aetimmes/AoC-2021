@@ -47,6 +47,10 @@ var levelMap = map[byte]int{
 	'b': 2,
 }
 
+var dontSubmit = map[string]bool{
+	"13b": true,
+}
+
 func main() {
 	test := flag.Bool("test", false, "use test input rather than primary input")
 	flag.BoolVar(test, "t", false, "")
@@ -98,7 +102,7 @@ func main() {
 
 	answer := int(results[0].Int())
 
-	if *test || *noSubmit {
+	if *test || *noSubmit || dontSubmit[flag.Arg(0)] {
 		fmt.Println("Answer: ", answer, "Result not submitted")
 	} else {
 		response_type, err := aocclient.SubmitAnswer(year, day, level, answer, sessionID)
