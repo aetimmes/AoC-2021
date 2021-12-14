@@ -40,6 +40,8 @@ var funcs = map[string]interface{}{
 	"12b": solutions.F12b,
 	"13a": solutions.F13a,
 	"13b": solutions.F13b,
+	"14a": solutions.F14a,
+	"14b": solutions.F14b,
 }
 
 var levelMap = map[byte]int{
