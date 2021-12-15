@@ -26,7 +26,6 @@ def main(input):
             if bounds_check(x2, y2, rows, cols):
                 r2 = r + grid[y2][x2]
                 if best[y2][x2] == -1 or r2 < best[y2][x2]:
-                    print(f"Pushing ({r2}, {x2}, {y2})") 
                     best[y2][x2] = r2
                     heapq.heappush(heap, (r2,x2,y2))
 
